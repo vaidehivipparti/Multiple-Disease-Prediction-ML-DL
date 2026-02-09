@@ -49,13 +49,19 @@ The project is designed with separate modules for each disease to ensure accurat
 
 ---
 
-## ⚠️ Note on Model Files
-Due to GitHub file size limitations, trained model files (`.pkl`, `.h5`, `.pth`) are **not included** in this repository.
+## ⚠️ Note on Model Files & Dataset Files
+
+Due to GitHub file size limitations, trained model files** (.pkl, .h5, .pth)** and datasets are **not included** in this repository.
+
+Jupyter notebooks are included to demonstrate:
+  - Data preprocessing
+  - Model training
+  - Experimentation workflows
 
 To run the project completely:
-- Train the models locally **OR**
-- Add the trained model files to the appropriate directories after cloning
-
+- Train the models locally using the provided notebooks OR
+- Add the train model files to the appropriate directories after cloning the Repository.
+  
 ---
 
 ## ▶️ How to Run the Project
