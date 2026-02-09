@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(10px);
+        }
+        .hero-section {
+            background: linear-gradient(rgba(16, 47, 81, 0.8), rgba(19, 8, 111, 0.8)), url('static/health-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            animation: fadeInDown 1.5s ease;
+        }
+        .hero-section p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            animation: fadeInUp 1.5s ease;
+        }
+        .hero-section .btn {
+            animation: fadeIn 2s ease;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: #007bff;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #231c68;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+        }
+        .img-fluid {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .img-fluid:hover {
+            transform: scale(1.05);
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .btn-primary, .btn-success, .btn-light {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover, .btn-success:hover, .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/" style="font-size: 1.25rem;">Health Prediction</a> <!-- Smaller font size -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about-us" style="font-size: 0.9rem; padding: 0.5rem 1rem;">About Us</a> <!-- Smaller font size and padding -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#lung-cancer" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Lung Cancer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#diabetes" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Diabetes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#heart-disease" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Heart Disease</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#liver-disease" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Liver Disease</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4" style="color: #0ac21c;">Welcome to Health Prediction</h1>
+            <p class="lead">Predict your risk of lung cancer, diabetes, heart disease, and liver disease with our advanced AI models.</p>
+            
+        </div>
+    </header>
+
+    <!-- About Us Section -->
+    <section id="about-us" class="py-5">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <p class="section-content text-center">
+                Our mission is to provide accurate and accessible health predictions using state-of-the-art machine learning models. 
+                Whether you're concerned about lung cancer, diabetes, heart disease, or liver disease, our tools can help you assess your risk 
+                and take proactive steps towards better health. We are committed to leveraging technology to improve healthcare outcomes and 
+                empower individuals to make informed decisions about their health.
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title">Features</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Accurate Predictions</h3>
+                        <p>Our AI models are trained on large datasets to provide highly accurate health predictions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Easy to Use</h3>
+                        <p>Our user-friendly interface makes it easy for anyone to get a health risk assessment.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Accessible Anywhere</h3>
+                        <p>Access our tools from any device, anywhere, at any time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Lung Cancer Section -->
+    <section id="lung-cancer" class="py-5">
+        <div class="container">
+            <h2 class="section-title">About Lung Cancer</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="static/Lung-Cancer.jpg" alt="Lung Cancer" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <p class="section-content">
+                        Lung cancer is one of the most common and serious types of cancer. It occurs when abnormal cells grow uncontrollably 
+                        in the lungs, forming tumors that can interfere with lung function. Early detection is crucial for effective treatment.
+                    </p>
+                    <p class="section-content">
+                        Our lung cancer prediction tool uses advanced AI to analyze medical images and assess the likelihood of lung cancer. 
+                        Upload an image to get started.
+                    </p>
+                    <a href="{{ url_for('lung_cancer') }}" class="btn btn-primary">Predict Lung Cancer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Heart Disease Section -->
+    <section id="heart-disease" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">About Heart Disease</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="static/heart1.jpg" alt="Heart Disease" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <p class="section-content">
+                        Heart disease refers to a range of conditions affecting the heart, including coronary artery disease, heart attacks, and heart failure. 
+                        It is one of the leading causes of death worldwide, but early detection and lifestyle changes can significantly reduce risks.
+                    </p>
+                    <p class="section-content">
+                        Our heart disease prediction tool leverages advanced AI to analyze health data and estimate the likelihood of heart disease. 
+                        Get started by entering your health details for an assessment.
+                    </p>
+                    <a href="{{ url_for('heart_disease') }}" class="btn btn-primary">Predict Heart Disease</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Liver Disease Section -->
+    <section id="liver-disease" class="py-5">
+        <div class="container">
+            <h2 class="section-title">About Liver Disease</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="static/liver.webp" alt="Liver Disease" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <p class="section-content">
+                        Liver disease encompasses a variety of conditions that affect the liver's ability to function, such as hepatitis, cirrhosis, 
+                        and liver cancer. Early detection is vital for managing and preventing serious complications.
+                    </p>
+                    <p class="section-content">
+                        Our liver disease prediction tool uses advanced AI to analyze your health data and predict the likelihood of liver disease. 
+                        Start by entering your health information for an accurate assessment.
+                    </p>
+                    <a href="{{ url_for('liver_disease') }}" class="btn btn-primary">Predict Liver Disease</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Diabetes Section -->
+    <section id="diabetes" class="bg-light py-5">
+        <div class="container">
+            <h2 class="section-title">About Diabetes</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="section-content">
+                        Diabetes is a chronic condition that affects how your body processes blood sugar (glucose). If left unmanaged, it can 
+                        lead to serious health complications such as heart disease, kidney failure, and vision loss.
+                    </p>
+                    <p class="section-content">
+                        Our diabetes risk prediction tool uses your health data to assess your risk of developing diabetes. Enter your details 
+                        to get a personalized prediction.
+                    </p>
+                    <a href="{{ url_for('diabetes') }}" class="btn btn-success">Predict Diabetes Risk</a>
+                </div>
+                <div class="col-md-6">
+                    <img src="static/diabetes.webp" alt="Diabetes" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-content text-center">
+                If you have any questions or need support, feel free to reach out to us. We're here to help!
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2025 Health Prediction. All rights reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

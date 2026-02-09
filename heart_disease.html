@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: white;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        /* Styles for suggestions */
+        .suggestions {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+        .suggestions h3 {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .suggestions ul {
+            padding-left: 20px;
+        }
+        .suggestions li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Heart Disease Prediction</h2>
+    <form action="/heart_disease" method="post">
+        <label>Age:</label>
+        <input type="number" name="age" required>
+
+        <label>Sex (0 = Female, 1 = Male):</label>
+        <input type="number" name="sex" required>
+
+        <label>Chest Pain Type (0-3):</label>
+        <input type="number" name="cp" required>
+
+        <label>Resting Blood Pressure:</label>
+        <input type="number" name="trestbps" required>
+
+        <label>Cholesterol:</label>
+        <input type="number" name="chol" required>
+
+        <label>Fasting Blood Sugar (1 = True, 0 = False):</label>
+        <input type="number" name="fbs" required>
+
+        <label>Resting ECG (0-2):</label>
+        <input type="number" name="restecg" required>
+
+        <label>Max Heart Rate Achieved:</label>
+        <input type="number" name="thalach" required>
+
+        <label>Exercise Induced Angina (1 = Yes, 0 = No):</label>
+        <input type="number" name="exang" required>
+
+        <label>ST Depression Induced:</label>
+        <input type="text" name="oldpeak" required>
+
+        <label>Slope of Peak Exercise ST Segment (0-2):</label>
+        <input type="number" name="slope" required>
+
+        <label>Number of Major Vessels (0-3):</label>
+        <input type="number" name="ca" required>
+
+        <label>Thalassemia (0-3):</label>
+        <input type="number" name="thal" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+        <p class="result">Prediction: {{ result }}</p>
+
+        <div class="suggestions {% if result == 'Heart Disease Detected' %}alert-danger{% else %}alert-success{% endif %}">
+            {% if result == "Heart Disease Detected" %}
+                <h3>⚠️ Health Recommendations</h3>
+                <p>Your results indicate a potential risk of heart disease. It's important to take proactive steps:</p>
+                <ul>
+                    <li>✅ <strong>Consult a Cardiologist</strong> – Get further medical tests like ECG, echocardiogram, or stress test.</li>
+                    <li>🥗 <strong>Healthy Diet</strong> – Focus on whole grains, lean proteins, vegetables, and fruits. Avoid processed foods & excess sugar.</li>
+                    <li>🏃 <strong>Exercise Regularly</strong> – Aim for <strong>30 minutes of moderate exercise</strong> (walking, cycling) at least <strong>5 days a week</strong>.</li>
+                    <li>🩺 <strong>Monitor Blood Pressure & Cholesterol</strong> – Keep your <strong>blood pressure <120/80 mmHg</strong> and LDL cholesterol low.</li>
+                    <li>🚭 <strong>Quit Smoking & Limit Alcohol</strong> – Reduces plaque buildup in arteries and lowers risk.</li>
+                    <li>🧘 <strong>Manage Stress</strong> – Practice meditation, deep breathing, and ensure <strong>7-8 hours of sleep</strong>.</li>
+                </ul>
+                <p><strong>🔍 Next Steps:</strong> Schedule a health check-up and follow up with a healthcare provider.</p>
+            {% else %}
+                <h3>🎉 Good News!</h3>
+                <p>You do <strong>not</strong> have a high risk of heart disease based on the given data. However, maintaining a <strong>healthy lifestyle</strong> is crucial:</p>
+                <ul>
+                    <li>💪 <strong>Stay Active</strong> – Engage in regular <strong>physical activities</strong> (walking, jogging, or swimming).</li>
+                    <li>🍎 <strong>Eat a Balanced Diet</strong> – Include fiber-rich foods, omega-3 fatty acids, and stay hydrated.</li>
+                    <li>🛌 <strong>Prioritize Sleep</strong> – Aim for <strong>7-8 hours of quality sleep</strong> per night to support heart health.</li>
+                    <li>🚫 <strong>Reduce Stress</strong> – Engage in hobbies, yoga, or mindfulness techniques.</li>
+                    <li>🩸 <strong>Regular Checkups</strong> – Monitor cholesterol, blood pressure, and blood sugar annually.</li>
+                </ul>
+                <p><strong>🌟 Keep up the great work and stay heart-healthy!</strong></p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #218838;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+        .danger {
+            background-color: #dc3545;
+        }
+        .safe {
+            background-color: #28a745;
+        }
+        .recommendations {
+            margin-top: 15px;
+            text-align: left;
+        }
+        .recommendations h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .recommendations ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .recommendations li {
+            background: #f8f9fa;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Liver Disease Prediction</h2>
+    <form action="/liver_disease" method="POST">
+        <label for="age">Age of the patient:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label for="total_bilirubin">Total Bilirubin:</label>
+        <input type="number" id="total_bilirubin" name="total_bilirubin" step="0.01" required>
+
+        <label for="direct_bilirubin">Direct Bilirubin:</label>
+        <input type="number" id="direct_bilirubin" name="direct_bilirubin" step="0.01" required>
+
+        <label for="alkphos">Alkphos Alkaline Phosphotase:</label>
+        <input type="number" id="alkphos" name="alkphos" required>
+
+        <label for="sgpt">Sgpt Alamine Aminotransferase:</label>
+        <input type="number" id="sgpt" name="sgpt" required>
+
+        <label for="sgot">Sgot Aspartate Aminotransferase:</label>
+        <input type="number" id="sgot" name="sgot" required>
+
+        <label for="total_proteins">Total Proteins:</label>
+        <input type="number" id="total_proteins" name="total_proteins" step="0.01" required>
+
+        <label for="albumin">ALB Albumin:</label>
+        <input type="number" id="albumin" name="albumin" step="0.01" required>
+
+        <label for="ag_ratio">A/G Ratio Albumin and Globulin Ratio:</label>
+        <input type="number" id="ag_ratio" name="ag_ratio" step="0.01" required>
+
+        <button type="submit" class="btn">Predict</button>
+    </form>
+
+    <!-- Display Prediction Result -->
+    {% if result %}
+        <div class="result {% if 'Detected' in result %}danger{% else %}safe{% endif %}">
+            {{ result }}
+        </div>
+
+        <!-- Display Recommendations -->
+        <div class="recommendations">
+            <h3>Recommendations:</h3>
+            <ul>
+                {% if 'Detected' in result %}
+                    <li>Consult a hepatologist for further evaluation.</li>
+                    <li>Avoid alcohol, smoking, and processed foods.</li>
+                    <li>Increase intake of leafy greens, fiber, and water.</li>
+                    <li>Engage in daily exercise and maintain a healthy weight.</li>
+                    <li>Monitor liver enzymes through regular medical check-ups.</li>
+                {% else %}
+                    <li>Maintain a healthy liver by avoiding alcohol and smoking.</li>
+                    <li>Follow a balanced diet with proteins and antioxidants.</li>
+                    <li>Exercise regularly to keep a healthy BMI.</li>
+                    <li>Stay hydrated with at least 8 glasses of water daily.</li>
+                    <li>Get routine checkups for preventive care.</li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

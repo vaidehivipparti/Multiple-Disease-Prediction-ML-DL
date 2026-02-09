@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Cancer Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Health Prediction</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('lung_cancer') }}">Lung Cancer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('diabetes') }}">Diabetes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center">Lung Cancer Prediction</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ url_for('lung_cancer') }}" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Upload Lung Image:</label>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Predict</button>
+                        </form>
+
+                        {% if prediction %}
+                        <div class="result mt-4 text-center animate__animated animate__fadeIn">
+                            <h3 class="text-primary">Prediction Result</h3>
+                            <p class="lead">Prediction: <strong>{{ prediction }}</strong></p>
+                            <img src="{{ url_for('static', filename='uploads/' + image_url) }}" class="img-fluid rounded mt-3" alt="Uploaded Image">
+                        </div>
+
+                        <!-- Dynamic Suggestions Based on Prediction -->
+                        <div class="suggestions mt-4">
+                            {% if prediction == "Malignant" %}
+                            <div class="alert alert-danger animate__animated animate__fadeIn">
+                                <h4>⚠️ Urgent: Consult a Doctor</h4>
+                                <ul>
+                                    <li>📌 Schedule an appointment with an **oncologist** immediately.</li>
+                                    <li>📌 Consider additional tests like **CT scan, biopsy, or PET scan**.</li>
+                                    <li>📌 Quit smoking and follow a **lung-friendly diet**.</li>
+                                </ul>
+                            </div>
+
+                            {% elif prediction == "Beginning" %}
+                            <div class="alert alert-warning animate__animated animate__fadeIn">
+                                <h4>🔍 Early Detection: Monitor Your Health</h4>
+                                <ul>
+                                    <li>📌 Regular check-ups to track changes in lung health.</li>
+                                    <li>📌 Reduce exposure to pollutants and harmful chemicals.</li>
+                                    <li>📌 Maintain a **healthy diet** and engage in breathing exercises.</li>
+                                </ul>
+                            </div>
+
+                            {% elif prediction == "Normal" %}
+                            <div class="alert alert-success animate__animated animate__fadeIn">
+                                <h4>✅ Good News! No Cancer Detected</h4>
+                                <ul>
+                                    <li>✅ Avoid smoking and second-hand smoke.</li>
+                                    <li>✅ Stay active with regular **cardio exercises**.</li>
+                                    <li>✅ Maintain annual **lung screenings** if you are at risk.</li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p>&copy; 2025 Health Prediction. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
