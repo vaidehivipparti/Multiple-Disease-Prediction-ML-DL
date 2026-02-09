@@ -51,7 +51,7 @@ The project is designed with separate modules for each disease to ensure accurat
 
 ## ⚠️ Note on Model Files & Dataset Files
 
-Due to GitHub file size limitations, trained model files** (.pkl, .h5, .pth)** and datasets are **not included** in this repository.
+Due to GitHub file size limitations, trained model files (.pkl, .h5, .pth) and datasets are not included in this repository.
 
 Jupyter notebooks are included to demonstrate:
   - Data preprocessing
